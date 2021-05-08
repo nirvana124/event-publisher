@@ -10,16 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 import static com.nirvana.eventpublisher.model.EventDestination.SNS;
-import static com.nirvana.eventpublisher.model.Events.*;
+import static com.nirvana.eventpublisher.model.Events.USER_CREATED;
+import static com.nirvana.eventpublisher.model.Events.USER_UPDATED;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class EventPublisherServiceImpl implements EventPublisherService {
-
-    private static Map<String, EventDestination> eventDestinations = Map.of(
-            USER_CREATED, SNS,
-            USER_UPDATED, EventDestination.SQS);
 
     private final Map<String, EventPublisher> eventPublishers;
     private final ObjectMapper objectMapper;
@@ -33,6 +30,10 @@ public class EventPublisherServiceImpl implements EventPublisherService {
     }
 
     private EventPublisher publisher(String eventType) {
+        Map<String, EventDestination> eventDestinations = Map.of(
+                USER_CREATED, SNS,
+                USER_UPDATED, EventDestination.SQS);
+
         var destination = eventDestinations.getOrDefault(eventType, SNS);
         return eventPublishers.get(destination.getBeanName());
     }

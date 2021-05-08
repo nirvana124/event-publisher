@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 public enum EventDestination {
     SQS("sqsPublisher"), SNS("snsPublisher");
-//    EVENT_BRIDGE("eventBridgePublisher"), KINESIS("kinesisPublisher"), MSK("kafkaPublisher");
-    private String beanName;
+    private final String beanName;
 }
+
+
+//    EVENT_BRIDGE("eventBridgePublisher"), KINESIS("kinesisPublisher"), MSK("kafkaPublisher");
